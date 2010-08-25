@@ -8,9 +8,10 @@ from templatetag_sugar.node import SugarNode
 
 
 class Parser(object):
-    def __init__(self, syntax, function):
+    def __init__(self, syntax, function, template):
         self.syntax = syntax
         self.function = function
+        self.template = template
     
     def __call__(self, parser, token):
         # we're going to be doing pop(0) a bit, so a deque is way more 
@@ -35,7 +36,7 @@ class Parser(object):
                 tag_name,
                 " ".join(part.syntax() for part in self.syntax),
             ))
-        return SugarNode(pieces, self.function)
+        return SugarNode(pieces, self.function, self.template)
 
 
 class Parsable(object):
